@@ -27,14 +27,6 @@
     window.scrollTo({ top: 0, behavior: "smooth" });
   }
 
-  function statusLabel(status) {
-    return {
-      completed: "입력 완료",
-      in_progress: "입력 중",
-      not_started: "시작 전",
-    }[status];
-  }
-
   function initInstructor() {
     const setSelect = document.getElementById("test-set-select");
     const itemList = document.getElementById("item-list");
@@ -87,15 +79,9 @@
       participantList.innerHTML = data.participants
         .map(
           (participant) => `
-            <article class="participant-row">
+            <article class="participant-row is-${participant.status}">
               <strong>${participant.id}</strong>
-              <div class="tag-row">
-                <span class="tag">${statusLabel(participant.status)}</span>
-                <span>${participant.progress}%</span>
-              </div>
-              <div class="progress-track">
-                <div class="progress-bar" style="width: ${participant.progress}%"></div>
-              </div>
+              <b>${participant.progress}%</b>
             </article>
           `,
         )
