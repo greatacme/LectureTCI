@@ -57,6 +57,20 @@ h3 {
   font-size: clamp(24px, 3vw, 34px);
 }
 
+.header-status,
+.header-link {
+  display: inline-flex;
+  align-items: center;
+  min-height: 38px;
+  padding: 0 12px;
+  border: 1px solid var(--line);
+  border-radius: 6px;
+  background: var(--surface-soft);
+  color: var(--text);
+  font-weight: 800;
+  text-decoration: none;
+}
+
 .eyebrow {
   color: var(--primary);
   font-size: 13px;
@@ -197,6 +211,11 @@ code {
 
 .session-url-row code {
   min-height: 42px;
+}
+
+.link-grid {
+  display: grid;
+  gap: 8px;
 }
 
 .work-area {
@@ -357,6 +376,29 @@ input {
 
 .wide {
   width: 100%;
+}
+
+.primary-link,
+.secondary-link {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 42px;
+  border-radius: 6px;
+  padding: 0 16px;
+  font-weight: 800;
+  text-decoration: none;
+}
+
+.primary-link {
+  background: var(--primary);
+  color: #fff;
+}
+
+.secondary-link {
+  background: var(--surface);
+  border: 1px solid var(--line);
+  color: var(--text);
 }
 
 .text-button {

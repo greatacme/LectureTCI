@@ -1,0 +1,67 @@
+<!doctype html>
+<html lang="ko">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>LectureTCI 참여자 화면</title>
+    <link rel="stylesheet" href="styles.css">
+  </head>
+  <body data-page="student">
+    <header class="topbar">
+      <div>
+        <p class="eyebrow">LectureTCI</p>
+        <h1>참여자 화면</h1>
+      </div>
+      <a class="header-link" href="result.html?s=LT-4821">결과보기</a>
+    </header>
+
+    <main>
+      <section id="student-entry" class="view is-active" aria-labelledby="student-entry-title">
+        <div class="phone-shell">
+          <section class="mobile-screen">
+            <p class="eyebrow">참여자 접속</p>
+            <h2 id="student-entry-title">임시 ID를 입력하세요</h2>
+            <p class="muted">강사가 안내한 임시 ID를 사용합니다. 이메일이나 전화번호 입력은 권장하지 않습니다.</p>
+            <label class="field">
+              <span>임시 ID</span>
+              <input id="student-id" type="text" placeholder="예: A102" autocomplete="off">
+            </label>
+            <button class="primary-button wide" id="enter-test">검사 시작</button>
+          </section>
+        </div>
+      </section>
+
+      <section id="student-test" class="view" aria-labelledby="student-test-title">
+        <div class="phone-shell">
+          <section class="mobile-screen">
+            <div class="progress-wrap">
+              <span id="question-progress">1 / 8</span>
+              <div class="progress-track"><div id="question-bar" class="progress-bar"></div></div>
+            </div>
+            <h2 id="student-test-title">검사항목 응답</h2>
+            <p id="question-text" class="question-text"></p>
+            <div class="choice-grid" id="choice-grid"></div>
+            <div class="mobile-actions">
+              <button class="secondary-button" id="prev-question">이전</button>
+              <button class="primary-button" id="next-question">다음</button>
+            </div>
+          </section>
+        </div>
+      </section>
+
+      <section id="submitted" class="view" aria-labelledby="submitted-title">
+        <div class="phone-shell">
+          <section class="mobile-screen centered">
+            <p class="status-dot"></p>
+            <h2 id="submitted-title">제출 완료</h2>
+            <p class="muted">강사가 결과 공유를 열면 결과 URL에서 개인 결과를 확인할 수 있습니다.</p>
+            <a class="primary-link wide" href="result.html?s=LT-4821">결과보기</a>
+          </section>
+        </div>
+      </section>
+    </main>
+
+    <script src="sample-data.js"></script>
+    <script src="app.js"></script>
+  </body>
+</html>
