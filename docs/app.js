@@ -43,7 +43,6 @@
     const completedCount = document.getElementById("completed-count");
     const sessionStatus = document.getElementById("session-status");
     const lectureCode = document.getElementById("lecture-code");
-    const generateCode = document.getElementById("generate-code");
     const showQr = document.getElementById("show-qr");
     const closeQr = document.getElementById("close-qr");
     const qrDialog = document.getElementById("qr-dialog");
@@ -108,6 +107,12 @@
       sessionStatus.textContent = nextStatus;
     }
 
+    function generateSessionCode() {
+      const number = Math.floor(1000 + Math.random() * 9000);
+      state.sessionCode = `LT-${number}`;
+      renderCode();
+    }
+
     document.addEventListener("click", (event) => {
       const sessionButton = event.target.closest("[data-session-action]");
       if (sessionButton) {
@@ -117,15 +122,12 @@
           share: "결과 공유 중",
           end: "체험 종료",
         };
+        if (sessionButton.dataset.sessionAction === "start") {
+          generateSessionCode();
+          showQr.disabled = false;
+        }
         setSessionStatus(labels[sessionButton.dataset.sessionAction]);
       }
-    });
-
-    generateCode.addEventListener("click", () => {
-      const number = Math.floor(1000 + Math.random() * 9000);
-      state.sessionCode = `LT-${number}`;
-      renderCode();
-      setSessionStatus("강의 코드 생성됨");
     });
 
     showQr.addEventListener("click", () => {
