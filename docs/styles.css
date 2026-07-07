@@ -218,6 +218,32 @@ code {
   gap: 8px;
 }
 
+.code-control {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 18px;
+  padding: 18px;
+  background: var(--surface-soft);
+  border-radius: var(--radius);
+}
+
+.lecture-code {
+  display: block;
+  margin-top: 6px;
+  font-size: clamp(34px, 6vw, 58px);
+  font-weight: 900;
+  line-height: 1;
+  color: var(--primary-dark);
+}
+
+.code-actions {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+
 .work-area {
   min-width: 0;
 }
@@ -508,6 +534,62 @@ progress {
   accent-color: var(--primary);
 }
 
+.qr-dialog {
+  width: min(92vw, 460px);
+  padding: 0;
+  border: 0;
+  border-radius: var(--radius);
+  box-shadow: var(--shadow);
+}
+
+.qr-dialog::backdrop {
+  background: rgba(16, 24, 40, 0.55);
+}
+
+.qr-dialog-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 14px;
+  padding: 20px 20px 12px;
+  border-bottom: 1px solid var(--line);
+}
+
+.qr-body {
+  display: grid;
+  justify-items: center;
+  gap: 18px;
+  padding: 22px;
+}
+
+.qr-body img {
+  width: min(100%, 320px);
+  height: auto;
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+}
+
+.qr-code-box {
+  width: 100%;
+  padding: 16px;
+  text-align: center;
+  background: var(--surface-soft);
+  border-radius: var(--radius);
+}
+
+.qr-code-box span {
+  display: block;
+  color: var(--muted);
+  font-weight: 800;
+}
+
+.qr-code-box strong {
+  display: block;
+  margin-top: 6px;
+  font-size: 42px;
+  color: var(--primary-dark);
+}
+
 @media (max-width: 900px) {
   .topbar,
   .toolbar {
@@ -558,5 +640,10 @@ progress {
 
   .session-url-row {
     grid-template-columns: 1fr;
+  }
+
+  .code-control {
+    align-items: stretch;
+    flex-direction: column;
   }
 }

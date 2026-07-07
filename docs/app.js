@@ -4,6 +4,7 @@
   const state = {
     sessionStatus: "준비",
     selectedSetId: data?.testSets?.[0]?.id,
+    sessionCode: "LT-4821",
     questionIndex: 0,
     answers: {},
     studentId: "",
@@ -41,11 +42,24 @@
     const participantCount = document.getElementById("participant-count");
     const completedCount = document.getElementById("completed-count");
     const sessionStatus = document.getElementById("session-status");
-    const studentUrl = document.getElementById("student-url");
-    const resultUrl = document.getElementById("result-url");
+    const lectureCode = document.getElementById("lecture-code");
+    const generateCode = document.getElementById("generate-code");
+    const showQr = document.getElementById("show-qr");
+    const closeQr = document.getElementById("close-qr");
+    const qrDialog = document.getElementById("qr-dialog");
+    const qrImage = document.getElementById("qr-image");
+    const qrCodeText = document.getElementById("qr-code-text");
 
-    studentUrl.textContent = absoluteUrl("student.html?s=LT-4821");
-    resultUrl.textContent = absoluteUrl("result.html?s=LT-4821");
+    function renderCode() {
+      lectureCode.textContent = state.sessionCode;
+      qrCodeText.textContent = state.sessionCode;
+    }
+
+    function updateQrImage() {
+      const studentUrl = absoluteUrl("student.html");
+      const qrSrc = `https://api.qrserver.com/v1/create-qr-code/?size=320x320&margin=16&data=${encodeURIComponent(studentUrl)}`;
+      qrImage.src = qrSrc;
+    }
 
     setSelect.innerHTML = data.testSets
       .map((set) => `<option value="${set.id}">${set.name}</option>`)
@@ -94,7 +108,7 @@
       sessionStatus.textContent = nextStatus;
     }
 
-    document.addEventListener("click", async (event) => {
+    document.addEventListener("click", (event) => {
       const sessionButton = event.target.closest("[data-session-action]");
       if (sessionButton) {
         const labels = {
@@ -104,16 +118,29 @@
           end: "체험 종료",
         };
         setSessionStatus(labels[sessionButton.dataset.sessionAction]);
-        return;
       }
+    });
 
-      const copyButton = event.target.closest("[data-copy-target]");
-      if (copyButton) {
-        const target = document.getElementById(copyButton.dataset.copyTarget);
-        if (navigator.clipboard) {
-          await navigator.clipboard.writeText(target.textContent);
-        }
-        setSessionStatus("URL 복사됨");
+    generateCode.addEventListener("click", () => {
+      const number = Math.floor(1000 + Math.random() * 9000);
+      state.sessionCode = `LT-${number}`;
+      renderCode();
+      setSessionStatus("강의 코드 생성됨");
+    });
+
+    showQr.addEventListener("click", () => {
+      updateQrImage();
+      renderCode();
+      qrDialog.showModal();
+    });
+
+    closeQr.addEventListener("click", () => {
+      qrDialog.close();
+    });
+
+    qrDialog.addEventListener("click", (event) => {
+      if (event.target === qrDialog) {
+        qrDialog.close();
       }
     });
 
@@ -124,10 +151,12 @@
 
     renderItems();
     renderParticipants();
+    renderCode();
     setSessionStatus(state.sessionStatus);
   }
 
   function initStudent() {
+    const sessionCodeInput = document.getElementById("session-code");
     const studentIdInput = document.getElementById("student-id");
     const questionText = document.getElementById("question-text");
     const questionProgress = document.getElementById("question-progress");
@@ -166,6 +195,7 @@
     }
 
     document.getElementById("enter-test").addEventListener("click", () => {
+      state.sessionCode = sessionCodeInput.value.trim() || "LT-4821";
       state.studentId = studentIdInput.value.trim() || "A102";
       state.questionIndex = 0;
       state.answers = {};

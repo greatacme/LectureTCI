@@ -36,16 +36,14 @@
               <button class="danger-button" data-session-action="end">체험 종료</button>
             </div>
 
-            <div class="link-grid">
-              <div class="session-url-row">
-                <span class="label">참여자 URL</span>
-                <code id="student-url">student.html?s=LT-4821</code>
-                <button class="secondary-button" data-copy-target="student-url">URL 복사</button>
+            <div class="code-control">
+              <div>
+                <span class="label">강의 코드</span>
+                <output id="lecture-code" class="lecture-code">LT-4821</output>
               </div>
-              <div class="session-url-row">
-                <span class="label">결과 URL</span>
-                <code id="result-url">result.html?s=LT-4821</code>
-                <button class="secondary-button" data-copy-target="result-url">URL 복사</button>
+              <div class="code-actions">
+                <button class="secondary-button" id="generate-code">코드 생성</button>
+                <button class="primary-button" id="show-qr">QR 보기</button>
               </div>
             </div>
           </section>
@@ -83,6 +81,23 @@
         </div>
       </section>
     </main>
+
+    <dialog class="qr-dialog" id="qr-dialog" aria-labelledby="qr-title">
+      <div class="qr-dialog-header">
+        <div>
+          <p class="eyebrow">참여자 접속</p>
+          <h2 id="qr-title">QR 코드</h2>
+        </div>
+        <button class="icon-button" id="close-qr" aria-label="QR 닫기">x</button>
+      </div>
+      <div class="qr-body">
+        <img id="qr-image" alt="참여자 화면 QR 코드" width="320" height="320">
+        <div class="qr-code-box">
+          <span>강의 코드</span>
+          <strong id="qr-code-text">LT-4821</strong>
+        </div>
+      </div>
+    </dialog>
 
     <script src="sample-data.js"></script>
     <script src="app.js"></script>
