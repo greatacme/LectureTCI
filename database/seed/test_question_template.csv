@@ -1,0 +1,4 @@
+﻿question_no,measure_id,question_text,scale_min,scale_max,reverse_score,weight,is_active
+1,defe,"질문 문항을 입력하세요.",1,5,false,1,true
+2,clim,"질문 문항을 입력하세요.",1,5,false,1,true
+3,clim,"질문 문항을 입력하세요.",1,5,false,1,true

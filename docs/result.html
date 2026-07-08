@@ -17,25 +17,39 @@
 
     <main>
       <section id="result" class="view is-active" aria-labelledby="result-title">
-        <div class="phone-shell">
-          <section class="mobile-screen">
+        <section class="result-page">
+          <div class="result-hero">
+            <div>
             <p class="eyebrow">개인 결과</p>
-            <h2 id="result-title">ENFJ 유사 유형</h2>
-            <p class="muted">샘플 응답으로 생성한 예시 결과입니다. 실제 TCI 점수 체계는 운영 버전에서 별도 적용합니다.</p>
-            <div class="result-card">
-              <span>주요 경향</span>
-              <strong>관계 중심 · 직관적 · 계획형</strong>
+              <h2 id="result-title">LectureTCI 결과</h2>
+              <p class="muted">PDF 결과지의 구성을 웹 화면에 맞게 옮긴 예시입니다. 카테고리별 점수와 해석을 한 화면에서 함께 확인합니다.</p>
             </div>
-            <div class="score-list">
-              <div><span>E</span><progress value="72" max="100"></progress><b>72</b></div>
-              <div><span>N</span><progress value="65" max="100"></progress><b>65</b></div>
-              <div><span>F</span><progress value="78" max="100"></progress><b>78</b></div>
-              <div><span>J</span><progress value="61" max="100"></progress><b>61</b></div>
+            <div class="result-summary">
+              <span>참여자</span>
+              <strong>A102</strong>
+              <small>2026년 LectureTCI 체험</small>
             </div>
-            <a class="secondary-link wide" href="student.html?s=LT-4821">참여자 화면으로</a>
-          </section>
-        </div>
+          </div>
+          <div class="result-overview">
+            <div>
+              <span>전체 평균</span>
+              <strong>58.7</strong>
+            </div>
+            <div>
+              <span>주의 항목</span>
+              <strong>2</strong>
+            </div>
+            <div>
+              <span>강점 항목</span>
+              <strong>4</strong>
+            </div>
+          </div>
+          <div class="result-category-list" id="result-list"></div>
+          <a class="secondary-link result-back-link" href="student.html?s=LT-4821">참여자 화면으로</a>
+        </section>
       </section>
     </main>
+    <script src="sample-data.js"></script>
+    <script src="app.js"></script>
   </body>
 </html>
