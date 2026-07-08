@@ -3,20 +3,18 @@
   <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>LectureTCI Prototype</title>
+    <title>LectureTCI 강사 화면</title>
     <link rel="stylesheet" href="styles.css">
   </head>
-  <body>
+  <body data-page="instructor">
     <header class="topbar">
       <div>
         <p class="eyebrow">LectureTCI</p>
-        <h1>참여형 검사 체험</h1>
+        <h1>강사 화면</h1>
       </div>
-      <nav class="topnav" aria-label="주요 화면">
-        <button class="nav-button is-active" data-view="instructor">강사</button>
-        <button class="nav-button" data-view="student-entry">참여자</button>
-        <button class="nav-button" data-view="result">결과</button>
-      </nav>
+      <div class="header-status">
+        <span>프로토타입</span>
+      </div>
     </header>
 
     <main>
@@ -28,26 +26,29 @@
                 <h2 id="instructor-title">체험 진행 관리</h2>
                 <p class="muted">현재 상태: <strong id="session-status">준비</strong></p>
               </div>
-              <select id="test-set-select" aria-label="검사SET 선택"></select>
             </div>
 
             <div class="action-row">
               <button class="primary-button" data-session-action="start">체험 시작</button>
-              <button class="secondary-button" data-session-action="close-score">입력 종료 및 결과 취합</button>
+              <button class="secondary-button" data-session-action="close-score">입력 종료<br>결과 취합</button>
               <button class="primary-button" data-session-action="share">결과 공유</button>
               <button class="danger-button" data-session-action="end">체험 종료</button>
             </div>
 
-            <div class="session-url-row">
-              <span class="label">참여 URL</span>
-              <code>https://example.github.io/LectureTCI/?s=LT-4821</code>
-              <button class="secondary-button" id="copy-url">URL 복사</button>
+            <div class="code-control">
+              <div>
+                <span class="label">강의 코드</span>
+                <output id="lecture-code" class="lecture-code">LT-4821</output>
+              </div>
+              <div class="code-actions">
+                <button class="primary-button" id="show-qr" disabled>QR 보기</button>
+              </div>
             </div>
           </section>
 
           <section class="panel panel-dashboard">
             <h2>강사 대시보드</h2>
-            <p class="muted">검사SET 선택부터 결과 공유까지 강의 흐름을 제어합니다.</p>
+            <p class="muted">체험 시작부터 결과 공유까지 강의 흐름을 제어합니다.</p>
             <div class="metric-grid">
               <div class="metric">
                 <span>참여자</span>
@@ -67,83 +68,26 @@
             </div>
             <div id="participant-list" class="participant-list"></div>
           </section>
-
-          <section class="panel panel-items">
-            <div class="panel-header">
-              <h3>검사항목 관리</h3>
-              <button class="icon-button" title="문항 추가" aria-label="문항 추가">+</button>
-            </div>
-            <div id="item-list" class="item-list"></div>
-          </section>
-        </div>
-      </section>
-
-      <section id="student-entry" class="view" aria-labelledby="student-entry-title">
-        <div class="phone-shell">
-          <section class="mobile-screen">
-            <p class="eyebrow">참여자 접속</p>
-            <h2 id="student-entry-title">임시 ID를 입력하세요</h2>
-            <p class="muted">강사가 안내한 임시 ID를 사용합니다. 이메일이나 전화번호 입력은 권장하지 않습니다.</p>
-            <label class="field">
-              <span>임시 ID</span>
-              <input id="student-id" type="text" placeholder="예: A102" autocomplete="off">
-            </label>
-            <button class="primary-button wide" id="enter-test">검사 시작</button>
-            <button class="text-button" data-view="instructor">강사 화면 보기</button>
-          </section>
-        </div>
-      </section>
-
-      <section id="student-test" class="view" aria-labelledby="student-test-title">
-        <div class="phone-shell">
-          <section class="mobile-screen">
-            <div class="progress-wrap">
-              <span id="question-progress">1 / 8</span>
-              <div class="progress-track"><div id="question-bar" class="progress-bar"></div></div>
-            </div>
-            <h2 id="student-test-title">검사항목 응답</h2>
-            <p id="question-text" class="question-text"></p>
-            <div class="choice-grid" id="choice-grid"></div>
-            <div class="mobile-actions">
-              <button class="secondary-button" id="prev-question">이전</button>
-              <button class="primary-button" id="next-question">다음</button>
-            </div>
-          </section>
-        </div>
-      </section>
-
-      <section id="submitted" class="view" aria-labelledby="submitted-title">
-        <div class="phone-shell">
-          <section class="mobile-screen centered">
-            <p class="status-dot"></p>
-            <h2 id="submitted-title">제출 완료</h2>
-            <p class="muted">강사가 결과 공유를 열면 결과보기 버튼이 활성화됩니다.</p>
-            <button class="primary-button wide" data-view="result">결과보기</button>
-          </section>
-        </div>
-      </section>
-
-      <section id="result" class="view" aria-labelledby="result-title">
-        <div class="phone-shell">
-          <section class="mobile-screen">
-            <p class="eyebrow">개인 결과</p>
-            <h2 id="result-title">ENFJ 유사 유형</h2>
-            <p class="muted">샘플 응답으로 생성한 예시 결과입니다. 실제 TCI 점수 체계는 운영 버전에서 별도 적용합니다.</p>
-            <div class="result-card">
-              <span>주요 경향</span>
-              <strong>관계 중심 · 직관적 · 계획형</strong>
-            </div>
-            <div class="score-list">
-              <div><span>E</span><progress value="72" max="100"></progress><b>72</b></div>
-              <div><span>N</span><progress value="65" max="100"></progress><b>65</b></div>
-              <div><span>F</span><progress value="78" max="100"></progress><b>78</b></div>
-              <div><span>J</span><progress value="61" max="100"></progress><b>61</b></div>
-            </div>
-            <button class="secondary-button wide" data-view="student-entry">처음으로</button>
-          </section>
         </div>
       </section>
     </main>
+
+    <dialog class="qr-dialog" id="qr-dialog" aria-labelledby="qr-title">
+      <div class="qr-dialog-header">
+        <div>
+          <p class="eyebrow">참여자 접속</p>
+          <h2 id="qr-title">QR 코드</h2>
+        </div>
+        <button class="icon-button" id="close-qr" aria-label="QR 닫기">x</button>
+      </div>
+      <div class="qr-body">
+        <img id="qr-image" alt="참여자 화면 QR 코드" width="320" height="320">
+        <div class="qr-code-box">
+          <span>강의 코드</span>
+          <strong id="qr-code-text">LT-4821</strong>
+        </div>
+      </div>
+    </dialog>
 
     <script src="sample-data.js"></script>
     <script src="app.js"></script>
