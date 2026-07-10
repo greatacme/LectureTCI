@@ -3,7 +3,7 @@
   const page = document.body.dataset.page;
   const apiBaseUrl = new URLSearchParams(window.location.search).get("api")
     || window.LectureTCIConfig?.apiBaseUrl
-    || "http://localhost:8080";
+    || "https://lecturetci-api-323067825792.asia-northeast3.run.app";
   const instructorStorageKey = "LectureTCI.instructorSession.v1";
   const studentStorageKey = "LectureTCI.studentSession.v1";
   const state = {
