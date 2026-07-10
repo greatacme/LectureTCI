@@ -10,35 +10,41 @@
     <header class="topbar">
       <div>
         <p class="eyebrow">LectureTCI</p>
-        <h1>강사 화면</h1>
-      </div>
-      <div class="header-status">
-        <span>프로토타입</span>
       </div>
     </header>
 
     <main>
       <section id="instructor" class="view is-active" aria-labelledby="instructor-title">
+        <section class="session-recovery is-hidden" id="session-recovery" aria-labelledby="session-recovery-title">
+          <div class="session-recovery-header">
+            <div>
+              <h2 id="session-recovery-title">종료되지 않은 세션</h2>
+              <p class="muted">이어갈 세션을 선택하거나 정리 후 새로 시작합니다.</p>
+            </div>
+          </div>
+          <div class="session-recovery-list" id="session-recovery-list"></div>
+        </section>
+
         <div class="instructor-grid">
           <section class="panel panel-session">
             <div class="toolbar">
               <div>
-                <h2 id="instructor-title">체험 진행 관리</h2>
+                <h2 id="instructor-title">진행 관리 콘솔</h2>
                 <p class="muted">현재 상태: <strong id="session-status">준비</strong></p>
               </div>
             </div>
 
             <div class="action-row">
               <button class="primary-button" data-session-action="start">체험 시작</button>
-              <button class="secondary-button" data-session-action="close-score">입력 종료<br>결과 취합</button>
-              <button class="primary-button" data-session-action="share">결과 공유</button>
-              <button class="danger-button" data-session-action="end">체험 종료</button>
+              <button class="secondary-button" data-session-action="close-score" disabled>입력 종료<br>결과 취합</button>
+              <button class="primary-button" data-session-action="share" disabled>결과 공유</button>
+              <button class="danger-button" data-session-action="end" disabled>체험 종료</button>
             </div>
 
             <div class="code-control">
               <div>
                 <span class="label">강의 코드</span>
-                <output id="lecture-code" class="lecture-code">LT-4821</output>
+                <output id="lecture-code" class="lecture-code">준비중</output>
               </div>
               <div class="code-actions">
                 <button class="primary-button" id="show-qr" disabled>QR 보기</button>
@@ -47,8 +53,7 @@
           </section>
 
           <section class="panel panel-dashboard">
-            <h2>강사 대시보드</h2>
-            <p class="muted">체험 시작부터 결과 공유까지 강의 흐름을 제어합니다.</p>
+            <h2>대시보드</h2>
             <div class="metric-grid">
               <div class="metric">
                 <span>참여자</span>
@@ -57,6 +62,13 @@
               <div class="metric">
                 <span>완료</span>
                 <strong id="completed-count">0</strong>
+              </div>
+              <div class="metric metric-gauge">
+                <span>진행률</span>
+                <div class="progress-gauge" id="dashboard-progress-gauge" style="--progress: 0%">
+                  <div class="gauge-ticks" aria-hidden="true"></div>
+                  <strong id="dashboard-progress-percent">0%</strong>
+                </div>
               </div>
             </div>
           </section>
@@ -67,6 +79,16 @@
               <span class="refresh-label">2초 polling 예정</span>
             </div>
             <div id="participant-list" class="participant-list"></div>
+          </section>
+
+          <section class="panel panel-session-results">
+            <div class="panel-header">
+              <h3>세션 결과</h3>
+              <span class="refresh-label" id="session-result-status">결과 취합 전</span>
+            </div>
+            <div id="session-result-list" class="session-result-list">
+              <p class="empty-message">입력 종료 후 척도별 점수가 표시됩니다.</p>
+            </div>
           </section>
         </div>
       </section>
@@ -84,7 +106,11 @@
         <img id="qr-image" alt="참여자 화면 QR 코드" width="320" height="320">
         <div class="qr-code-box">
           <span>강의 코드</span>
-          <strong id="qr-code-text">LT-4821</strong>
+          <strong id="qr-code-text">준비중</strong>
+        </div>
+        <div class="qr-url-box">
+          <span>참여자 URL</span>
+          <code id="qr-url-text"></code>
         </div>
       </div>
     </dialog>

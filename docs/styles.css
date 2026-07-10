@@ -141,6 +141,67 @@ main {
   gap: 18px;
 }
 
+.session-recovery {
+  margin-bottom: 18px;
+  padding: 18px;
+  background: var(--surface);
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  box-shadow: var(--shadow);
+}
+
+.session-recovery-header {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 16px;
+  margin-bottom: 14px;
+}
+
+.session-recovery-list {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+  gap: 10px;
+}
+
+.session-recovery-item {
+  display: grid;
+  gap: 10px;
+  padding: 14px;
+  background: var(--surface-soft);
+  border: 1px solid rgba(31, 122, 140, 0.16);
+  border-radius: var(--radius);
+}
+
+.session-recovery-meta {
+  display: grid;
+  gap: 4px;
+}
+
+.session-recovery-meta strong {
+  color: var(--primary-dark);
+  font-size: 24px;
+  line-height: 1;
+}
+
+.session-recovery-meta span,
+.session-recovery-meta small {
+  color: var(--muted);
+  font-weight: 700;
+}
+
+.session-recovery-actions {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+
+.session-recovery-actions button {
+  min-height: 34px;
+  padding: 0 12px;
+  font-size: 13px;
+}
+
 .panel-session {
   grid-column: 1 / -1;
 }
@@ -151,6 +212,10 @@ main {
 
 .panel-participants {
   grid-column: 2;
+}
+
+.panel-session-results {
+  grid-column: 1 / -1;
 }
 
 .side-panel,
@@ -174,12 +239,13 @@ main {
 
 .metric-grid {
   display: grid;
-  grid-template-columns: 1fr 1fr;
+  grid-template-columns: repeat(3, 1fr);
   gap: 10px;
   margin: 22px 0;
 }
 
 .metric {
+  min-height: 132px;
   padding: 14px;
   background: var(--surface-soft);
   border-radius: var(--radius);
@@ -197,6 +263,98 @@ main {
   display: block;
   margin-top: 6px;
   font-size: 30px;
+}
+
+.metric-gauge {
+  display: grid;
+  justify-items: stretch;
+  align-content: start;
+  gap: 8px;
+}
+
+.metric-gauge > span {
+  justify-self: start;
+}
+
+.progress-gauge {
+  container-type: inline-size;
+  display: grid;
+  place-items: center;
+  position: relative;
+  width: 100%;
+  max-width: 198px;
+  aspect-ratio: 1.8 / 1;
+  justify-self: center;
+  overflow: hidden;
+  border-radius: 999px 999px 14px 14px;
+  background: transparent;
+}
+
+.progress-gauge::before {
+  content: none;
+}
+
+.progress-gauge::after {
+  content: none;
+}
+
+.progress-gauge strong {
+  position: relative;
+  z-index: 3;
+  margin: 0;
+  align-self: end;
+  padding-top: 0;
+  padding-bottom: 2cqw;
+  color: #5c83a8;
+  font-size: clamp(18px, 18cqw, 30px);
+  line-height: 1;
+  font-weight: 900;
+  text-shadow: 0 1px 0 rgba(255, 255, 255, 0.72);
+}
+
+.gauge-ticks {
+  position: absolute;
+  left: 50%;
+  top: 58cqw;
+  z-index: 2;
+  width: 0;
+  height: 0;
+  pointer-events: none;
+}
+
+.gauge-ticks span {
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 7.6cqw;
+  height: 8.6cqw;
+  border-radius: 2px;
+  background: rgba(92, 131, 168, 0.32);
+  border: 1px solid rgba(255, 255, 255, 0.72);
+  box-shadow: 0 1px 2px rgba(24, 34, 48, 0.08);
+  transform:
+    translate(-50%, -50%)
+    rotate(var(--tick-angle))
+    translateY(-46.5cqw);
+  transform-origin: center;
+}
+
+.gauge-ticks span.is-on {
+  background: linear-gradient(180deg, #7af3dd 0, #43d8c5 45%, var(--primary) 100%);
+  border-color: rgba(255, 255, 255, 0.9);
+  box-shadow:
+    0 0 12px rgba(67, 216, 197, 0.42),
+    inset 0 1px 0 rgba(255, 255, 255, 0.72);
+}
+
+.gauge-ticks span:first-child,
+.gauge-ticks span:last-child {
+  width: 9.1cqw;
+  height: 9.6cqw;
+}
+
+.gauge-ticks::before {
+  content: none;
 }
 
 code {
@@ -419,6 +577,228 @@ input {
 .participant-row.is-not_started strong,
 .participant-row.is-not_started b {
   color: #667085;
+}
+
+.session-result-list {
+  display: grid;
+  gap: 10px;
+  margin-top: 16px;
+}
+
+.session-result-cards {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+  gap: 10px;
+}
+
+.session-profile-chart {
+  display: grid;
+  gap: 8px;
+  padding: 14px 14px 18px;
+  overflow-x: auto;
+  border: 1px dashed #cfd8e3;
+  border-radius: var(--radius);
+  background: #fbfcfe;
+}
+
+.session-profile-title {
+  color: var(--muted);
+  font-size: 15px;
+  font-weight: 800;
+}
+
+.session-profile-categories {
+  display: grid;
+  gap: 8px;
+  min-width: 760px;
+  padding-left: 42px;
+}
+
+.session-profile-categories span {
+  min-height: 38px;
+  display: grid;
+  place-items: center;
+  padding: 6px 8px;
+  background: #eef1f4;
+  color: var(--muted);
+  font-size: 12px;
+  font-weight: 800;
+  text-align: center;
+}
+
+.session-profile-plot {
+  position: relative;
+  min-width: 760px;
+  height: 320px;
+  padding: 16px 0 82px 42px;
+}
+
+.session-profile-axis {
+  position: absolute;
+  left: 0;
+  top: 16px;
+  bottom: 82px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  width: 32px;
+  color: #98a2b3;
+  font-size: 11px;
+  text-align: right;
+}
+
+.session-profile-grid {
+  position: absolute;
+  left: 42px;
+  right: 0;
+  top: 16px;
+  bottom: 82px;
+  border-left: 2px solid #b8c2cc;
+  border-bottom: 2px solid #b8c2cc;
+  background:
+    repeating-linear-gradient(
+      to top,
+      transparent 0,
+      transparent calc(20% - 1px),
+      rgba(184, 194, 204, 0.42) calc(20% - 1px),
+      rgba(184, 194, 204, 0.42) 20%
+    );
+}
+
+.session-profile-bars {
+  position: relative;
+  z-index: 1;
+  display: grid;
+  align-items: end;
+  gap: 6px;
+  height: 100%;
+}
+
+.session-profile-bar {
+  position: relative;
+  display: grid;
+  grid-template-rows: 20px 1fr 76px;
+  justify-items: center;
+  min-width: 30px;
+  height: 100%;
+}
+
+.session-profile-value {
+  color: var(--text);
+  font-size: 11px;
+  font-weight: 900;
+}
+
+.session-profile-track {
+  position: relative;
+  display: flex;
+  align-items: end;
+  width: 20px;
+  height: 100%;
+}
+
+.session-profile-track i {
+  display: block;
+  width: 100%;
+  min-height: 2px;
+  background: #f5dfca;
+  border-radius: 2px 2px 0 0;
+}
+
+.session-profile-bar.is-green .session-profile-track i {
+  background: #9bdc3d;
+}
+
+.session-profile-bar.is-yellow .session-profile-track i {
+  background: var(--accent);
+}
+
+.session-profile-bar.is-red .session-profile-track i {
+  background: var(--danger);
+}
+
+.session-profile-bar b {
+  align-self: start;
+  max-width: 76px;
+  margin-top: 8px;
+  color: #8a94a3;
+  font-size: 12px;
+  font-weight: 800;
+  line-height: 1.15;
+  text-align: left;
+  transform: rotate(90deg);
+  transform-origin: 16px 16px;
+  white-space: nowrap;
+}
+
+.session-result-row {
+  display: grid;
+  gap: 9px;
+  padding: 12px;
+  background: var(--surface-soft);
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+}
+
+.session-result-title {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 10px;
+}
+
+.session-result-title strong {
+  font-size: 15px;
+}
+
+.session-result-title span {
+  color: var(--muted);
+  font-size: 12px;
+  font-weight: 800;
+}
+
+.session-result-score {
+  display: flex;
+  align-items: end;
+  justify-content: space-between;
+  gap: 10px;
+}
+
+.session-result-score strong {
+  color: var(--primary-dark);
+  font-size: 26px;
+  line-height: 1;
+}
+
+.session-result-score small {
+  color: var(--muted);
+  font-weight: 700;
+}
+
+.session-result-bar {
+  height: 8px;
+  overflow: hidden;
+  background: rgba(102, 112, 133, 0.18);
+  border-radius: 999px;
+}
+
+.session-result-bar div {
+  height: 100%;
+  background: linear-gradient(90deg, var(--primary), #75c5ca);
+  border-radius: inherit;
+}
+
+.session-result-row.is-yellow .session-result-bar div {
+  background: linear-gradient(90deg, var(--accent), #f1c76a);
+}
+
+.session-result-row.is-red .session-result-bar div {
+  background: linear-gradient(90deg, var(--danger), #e07b75);
+}
+
+.empty-message {
+  margin: 0;
+  color: var(--muted);
 }
 
 .phone-shell {
@@ -832,6 +1212,23 @@ progress {
   color: var(--primary-dark);
 }
 
+.qr-url-box {
+  width: 100%;
+}
+
+.qr-url-box span {
+  display: block;
+  margin-bottom: 6px;
+  color: var(--muted);
+  font-size: 13px;
+  font-weight: 800;
+  text-align: center;
+}
+
+.qr-url-box code {
+  text-align: left;
+}
+
 @media (max-width: 900px) {
   .topbar,
   .toolbar {
@@ -854,7 +1251,8 @@ progress {
 
   .panel-session,
   .panel-dashboard,
-  .panel-participants {
+  .panel-participants,
+  .panel-session-results {
     grid-column: 1;
   }
 

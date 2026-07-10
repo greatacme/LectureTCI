@@ -12,10 +12,11 @@ create table if not exists lecture_session (
     started_at timestamptz,
     closed_at timestamptz,
     published_at timestamptz,
+    completed_at timestamptz,
     created_at timestamptz not null default now(),
     updated_at timestamptz not null default now(),
     constraint lecture_session_status_chk
-        check (status in ('ready', 'active', 'closed', 'published')),
+        check (status in ('ready', 'active', 'closed', 'published', 'completed')),
     constraint lecture_session_code_chk
         check (session_code ~ '^[0-9]{6}$'),
     constraint lecture_session_expected_count_chk
@@ -23,20 +24,21 @@ create table if not exists lecture_session (
 );
 
 create table if not exists participant (
+    id uuid primary key default gen_random_uuid(),
     lecture_session_id uuid not null references lecture_session(id) on delete cascade,
-    participant_id text not null,
+    nickname text not null,
     status text not null default 'ready',
     progress_percent integer not null default 0,
     created_at timestamptz not null default now(),
     joined_at timestamptz,
     submitted_at timestamptz,
-    primary key (lecture_session_id, participant_id),
+    constraint participant_id_session_uk unique (id, lecture_session_id),
     constraint participant_status_chk
         check (status in ('ready', 'joined', 'in_progress', 'submitted')),
     constraint participant_progress_chk
         check (progress_percent between 0 and 100),
-    constraint participant_id_chk
-        check (length(trim(participant_id)) > 0)
+    constraint participant_nickname_chk
+        check (length(trim(nickname)) between 2 and 12)
 );
 
 create table if not exists measure_category (
@@ -117,14 +119,14 @@ create table if not exists test_question (
 
 create table if not exists response (
     lecture_session_id uuid not null,
-    participant_id text not null,
+    participant_id uuid not null,
     question_id uuid not null references test_question(id),
     answer_value numeric(8, 4) not null,
     answered_at timestamptz not null default now(),
     updated_at timestamptz not null default now(),
-    primary key (lecture_session_id, participant_id, question_id),
-    foreign key (lecture_session_id, participant_id)
-        references participant(lecture_session_id, participant_id)
+    primary key (participant_id, question_id),
+    foreign key (participant_id, lecture_session_id)
+        references participant(id, lecture_session_id)
         on delete cascade
 );
 
@@ -148,7 +150,7 @@ create table if not exists session_measure_result (
 
 create table if not exists participant_measure_result (
     lecture_session_id uuid not null,
-    participant_id text not null,
+    participant_id uuid not null,
     measure_id text not null references measure(id),
     question_count integer not null,
     score_sum numeric(12, 4) not null,
@@ -156,9 +158,9 @@ create table if not exists participant_measure_result (
     score_100 numeric(6, 2) not null,
     level_code text not null,
     calculated_at timestamptz not null default now(),
-    primary key (lecture_session_id, participant_id, measure_id),
-    foreign key (lecture_session_id, participant_id)
-        references participant(lecture_session_id, participant_id)
+    primary key (participant_id, measure_id),
+    foreign key (participant_id, lecture_session_id)
+        references participant(id, lecture_session_id)
         on delete cascade,
     foreign key (measure_id, level_code)
         references measure_interpretation(measure_id, level_code),
@@ -170,6 +172,9 @@ create table if not exists participant_measure_result (
 
 create index if not exists idx_participant_session_status
     on participant (lecture_session_id, status);
+
+create unique index if not exists idx_participant_session_nickname_uk
+    on participant (lecture_session_id, lower(nickname));
 
 create index if not exists idx_measure_category_sort
     on measure (category_id, sort_order);
@@ -190,7 +195,7 @@ create index if not exists idx_session_measure_result_measure
     on session_measure_result (measure_id, level_code);
 
 comment on table lecture_session is 'LectureTCI lecture/session instance.';
-comment on table participant is 'Pre-created participant IDs per lecture session.';
+comment on table participant is 'Participants entered by nickname per lecture session.';
 comment on table measure_category is 'Result category master.';
 comment on table measure is 'Measure master. Each question maps to one measure.';
 comment on table measure_interpretation is 'Measure score range, level, color, and interpretation text.';

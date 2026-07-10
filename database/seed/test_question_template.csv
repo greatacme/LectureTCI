@@ -1,4 +1,4 @@
 ﻿question_no,measure_id,question_text,scale_min,scale_max,reverse_score,weight,is_active
-1,defe,"질문 문항을 입력하세요.",1,5,false,1,true
-2,clim,"질문 문항을 입력하세요.",1,5,false,1,true
-3,clim,"질문 문항을 입력하세요.",1,5,false,1,true
+1,defe,새로운 사람들과 함께 있을 때 에너지가 생기는 편이다.,1,4,FALSE,1,TRUE
+2,clim,혼자 생각을 정리한 뒤 말하는 편이 편하다.,1,4,FALSE,1,TRUE
+3,clim,구체적인 사실보다 가능성과 의미를 먼저 떠올린다.,1,4,FALSE,1,TRUE
