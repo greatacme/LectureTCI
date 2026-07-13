@@ -818,6 +818,12 @@
       }
     }
 
+    function showStudentResult() {
+      renderResult("student-result-list");
+      showView("submitted");
+      window.clearInterval(state.pollTimer);
+    }
+
     async function refreshSessionStatus() {
       if (!state.sessionCode || state.sessionCode === "준비중") {
         return;
@@ -826,6 +832,11 @@
       const session = await apiFetch(`/api/sessions/${encodeURIComponent(state.sessionCode)}`);
       state.sessionBackendStatus = session.status;
       applyStudentSessionState();
+
+      const isWaitingForResult = document.getElementById("submit-confirm")?.classList.contains("is-active");
+      if (state.isSubmitted && session.status === "published" && isWaitingForResult) {
+        showStudentResult();
+      }
     }
 
     function startStudentPolling() {
@@ -1073,10 +1084,7 @@
       }
     });
 
-    viewResult.addEventListener("click", () => {
-      renderResult("student-result-list");
-      showView("submitted");
-    });
+    viewResult.addEventListener("click", showStudentResult);
 
     restoreStudentState().catch((error) => {
       console.warn(error);
