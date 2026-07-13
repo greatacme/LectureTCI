@@ -61,8 +61,8 @@ public class ParticipantService {
 
     private String normalizeNickname(String nickname) {
         String normalized = nickname == null ? "" : nickname.trim();
-        if (!normalized.matches("[가-힣A-Za-z0-9_-]{2,12}")) {
-            throw new ApiException(HttpStatus.BAD_REQUEST, "닉네임은 한글, 영문, 숫자, -, _ 조합 2~12자로 입력해 주세요.");
+        if (!normalized.matches("[가-힣A-Za-z0-9_-]{2,10}")) {
+            throw new ApiException(HttpStatus.BAD_REQUEST, "닉네임은 한글, 영문, 숫자, -, _ 조합 2~10자로 입력해 주세요.");
         }
         return normalized;
     }

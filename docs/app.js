@@ -729,6 +729,7 @@
     const requestedSessionCode = new URLSearchParams(window.location.search).get("s") || "";
     const sessionCodeInput = document.getElementById("session-code");
     const studentIdInput = document.getElementById("student-id");
+    const nicknamePlaceholder = "예: 쟤시켜알바";
     const questionText = document.getElementById("question-text");
     const questionProgress = document.getElementById("question-progress");
     const questionBar = document.getElementById("question-bar");
@@ -744,6 +745,16 @@
     const resultWaitMessage = document.getElementById("result-wait-message");
     const viewResult = document.getElementById("view-result");
     const resultSummaryName = document.querySelector(".result-summary strong");
+
+    studentIdInput.addEventListener("focus", () => {
+      studentIdInput.placeholder = "";
+    });
+
+    studentIdInput.addEventListener("blur", () => {
+      if (!studentIdInput.value.trim()) {
+        studentIdInput.placeholder = nicknamePlaceholder;
+      }
+    });
 
     function saveStudentState(extra = {}) {
       if (!state.studentId || !state.sessionCode || state.sessionCode === "준비중") {
@@ -957,6 +968,11 @@
 
       if (!sessionCode || !nickname) {
         window.alert("강의 코드와 닉네임을 입력해 주세요.");
+        return;
+      }
+
+      if (!/^[가-힣A-Za-z0-9_-]{2,10}$/.test(nickname)) {
+        window.alert("닉네임은 한글, 영문, 숫자, -, _ 조합 2~10자로 입력해 주세요.");
         return;
       }
 

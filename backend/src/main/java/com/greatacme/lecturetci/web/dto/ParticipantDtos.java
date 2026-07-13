@@ -13,7 +13,7 @@ public final class ParticipantDtos {
     public record JoinParticipantRequest(
             @NotBlank String sessionCode,
             @NotBlank
-            @Pattern(regexp = "[가-힣A-Za-z0-9_-]{2,12}", message = "닉네임은 한글, 영문, 숫자, -, _ 조합 2~12자로 입력해 주세요.")
+            @Pattern(regexp = "[가-힣A-Za-z0-9_-]{2,10}", message = "닉네임은 한글, 영문, 숫자, -, _ 조합 2~10자로 입력해 주세요.")
             String nickname
     ) {
     }
