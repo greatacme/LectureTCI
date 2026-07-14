@@ -818,6 +818,21 @@ input {
   text-align: center;
 }
 
+.result-wait {
+  width: 100%;
+}
+
+.grading-wait-gif {
+  display: block;
+  width: min(100%, 320px);
+  aspect-ratio: 5 / 4;
+  object-fit: cover;
+  margin: 0 auto 22px;
+  border: 1px solid var(--line);
+  border-radius: 6px;
+  background: var(--soft);
+}
+
 .field {
   display: grid;
   gap: 8px;
